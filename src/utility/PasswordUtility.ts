@@ -21,7 +21,7 @@ export const ValidatePassword = async (
 };
 
 export const GenerateSignature = async (payload: UserPayload) => {
-  const signature = await jwt.sign(payload, APP_SECRET, { expiresIn: '3d' });
+  const signature = jwt.sign(payload, APP_SECRET, { expiresIn: '3d' });
 
   return signature;
 };
@@ -29,7 +29,7 @@ export const GenerateSignature = async (payload: UserPayload) => {
 export const ValidateSignature = async (req: Request) => {
   const signature = req.get('Authorization');
   if (signature) {
-    const payload = (await jwt.verify(signature.split(' ')[1], APP_SECRET)) as UserPayload;
+    const payload = jwt.verify(signature.split(' ')[1], APP_SECRET) as UserPayload;
     req.user = payload;
 
     return true;

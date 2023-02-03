@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, Length } from 'class-validator';
+import { IsEmail, IsNotEmpty, Length, IsPhoneNumber, IsNumber } from 'class-validator';
 
 export class CreateUserInputs {
   @IsNotEmpty()
@@ -6,12 +6,16 @@ export class CreateUserInputs {
   email: string;
 
   @IsNotEmpty()
-  @Length(6, 20)
-  username: string;
+  @IsNumber()
+  user_type: number;
 
   @IsNotEmpty()
   @Length(6, 12)
   password: string;
+
+  @IsNotEmpty()
+  @IsPhoneNumber()
+  phone: string;
 }
 export class VerifyEmailInputs {
   @IsNotEmpty()
@@ -20,27 +24,27 @@ export class VerifyEmailInputs {
 }
 export class VerifyOtpRegInputs {
   @IsNotEmpty()
-  @IsEmail()
-  email: string;
+  @IsPhoneNumber()
+  phone: string;
 
   @IsNotEmpty()
-  @Length(6)
+  @Length(4)
   otp: string;
 }
 export class LoginInputs {
   @IsNotEmpty()
-  @IsEmail()
-  email: string;
+  @IsPhoneNumber()
+  phone: string;
 
   @IsNotEmpty()
-  @Length(6)
+  @Length(6, 12)
   password: string;
 }
 
 export interface UserPayload {
   _id: string;
   email: string;
-  verified: boolean;
+  activated: boolean;
 }
 
 export class UserLoginInput {
