@@ -25,12 +25,12 @@ export const RegisterUser = async (req: Request, res: Response, next: NextFuncti
     const { email, password, user_type, phone } = customerInputs;
     const salt = await GenerateSalt();
     const hashedpassword = await GeneratePassword(password, salt);
-    const existingUser = await User.findOne({ email: email });
-
+    const existingUser = await User.findOne({ $or: [{ email: email }, { phone: phone }] });
     const { expiry, otp } = GenerateOtp();
 
+    console.log(existingUser);
     if (existingUser !== null) {
-      res.status(400).json({ message: 'An existing user with provided email', status: 0 });
+      res.status(400).json({ message: 'An existing user with provided data', status: 0 });
     } else {
       try {
         const result = await User.create({

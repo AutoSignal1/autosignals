@@ -5,7 +5,9 @@ import { MONGO_URL } from '../config';
 export default async () => {
   try {
     mongoose
-      .connect(MONGO_URL)
+      .connect(MONGO_URL, {
+        autoIndex: true,
+      })
       .then(res => {
         console.log('Connected to DB');
       })
