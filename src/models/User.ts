@@ -1,34 +1,43 @@
 import mongoose, { Document, Model, Schema } from 'mongoose';
+import { CredentialDoc } from './Credentials';
 
-interface UserDoc extends Document {
+export interface UserDoc extends Document {
   email: string;
   password: string;
   phone: string;
+  full_name: string;
   activated: boolean;
   user_type: number;
+  credentials: [CredentialDoc];
   salt: string;
   otp: string;
   otp_expiry: Date;
-  firstname: string;
-  lastname: string;
-  address: string;
-  username: string;
+  followers: [UserDoc];
+  followings: [UserDoc];
 }
 
-const UserSchema = new Schema(
+const UserSchema = new Schema<UserDoc>(
   {
-    email: { type: String, required: true, maxLength: 50, unique: true },
-    phone: { type: String, required: true, maxLength: 15, unique: true },
+    email: { type: String, required: true, maxLength: 50, unique: true, index: true },
+    phone: { type: String, required: true, maxLength: 15, unique: true, index: true },
     user_type: { type: Number, required: true, default: 1 },
     password: { type: String },
-    username: { type: String },
     salt: { type: String },
     otp: { type: String },
     otp_expiry: { type: Date },
-    firstname: { type: String },
-    lastname: { type: String },
-    address: { type: String },
     activated: { type: Boolean, default: false },
+    followers: [
+      {
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'user',
+      },
+    ],
+    followings: [
+      {
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'user',
+      },
+    ],
   },
   {
     toJSON: {

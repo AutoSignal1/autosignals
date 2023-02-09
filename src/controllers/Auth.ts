@@ -1,4 +1,4 @@
-import { onRequestOTP } from './../utility/NotificationUtility';
+import { onRequestOTP } from '../utility/NotificationUtility';
 import express, { Request, Response, NextFunction } from 'express';
 import moment from 'moment';
 import { plainToInstance } from 'class-transformer';
@@ -28,7 +28,6 @@ export const RegisterUser = async (req: Request, res: Response, next: NextFuncti
     const existingUser = await User.findOne({ $or: [{ email: email }, { phone: phone }] });
     const { expiry, otp } = GenerateOtp();
 
-    console.log(existingUser);
     if (existingUser !== null) {
       res.status(400).json({ message: 'An existing user with provided data', status: 0 });
     } else {
