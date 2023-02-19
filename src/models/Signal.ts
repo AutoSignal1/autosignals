@@ -1,12 +1,12 @@
+import { TraderDoc } from './Trader';
 import mongoose, { Document, Model, Schema } from 'mongoose';
-import { UserDoc } from './User';
 
 export interface SignalDoc extends Document {
   asset: string;
   type: string;
   take_profit: string;
   stop_loss: string;
-  user: UserDoc;
+  user: TraderDoc;
 }
 
 const SignalSchema = new Schema<SignalDoc>(

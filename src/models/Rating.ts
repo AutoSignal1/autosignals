@@ -1,16 +1,19 @@
 import mongoose, { Document, Model, Schema } from 'mongoose';
-import { UserDoc } from './User';
+import { TraderDoc } from './Trader';
+import { CopyTraderDoc } from './CopyTrader';
 
 export interface RatingDoc extends Document {
   rating: number;
-  user: UserDoc;
+  trader: TraderDoc;
+  copy_trader: CopyTraderDoc;
   text: string;
 }
 
 const RatingSchema = new Schema<RatingDoc>(
   {
     rating: { type: Number, required: true, unique: true, max: 5, min: 0 },
-    user: { type: mongoose.SchemaTypes.ObjectId, ref: 'user' },
+    trader: { type: mongoose.SchemaTypes.ObjectId, ref: 'trader' },
+    copy_trader: { type: mongoose.SchemaTypes.ObjectId, ref: 'ctraders' },
     text: { type: String, required: true },
   },
   {
@@ -25,5 +28,5 @@ const RatingSchema = new Schema<RatingDoc>(
   },
 );
 
-const Rating = mongoose.model<RatingDoc>('credential', RatingSchema);
+const Rating = mongoose.model<RatingDoc>('ratings', RatingSchema);
 export { Rating };

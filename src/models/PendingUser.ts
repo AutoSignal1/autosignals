@@ -1,43 +1,25 @@
 import mongoose, { Document, Model, Schema } from 'mongoose';
-import { CredentialDoc } from './Credentials';
+import { RatingDoc } from './Rating';
 
-export interface UserDoc extends Document {
+export interface PendingUserDoc extends Document {
   email: string;
   password: string;
   phone: string;
-  full_name: string;
-  activated: boolean;
-  user_type: number;
-  credentials: [CredentialDoc];
   salt: string;
+  full_name: string;
   otp: string;
   otp_expiry: Date;
-  followers: [UserDoc];
-  followings: [UserDoc];
 }
 
-const UserSchema = new Schema<UserDoc>(
+const UserSchema = new Schema<PendingUserDoc>(
   {
     email: { type: String, required: true, maxLength: 50, unique: true, index: true },
     phone: { type: String, required: true, maxLength: 15, unique: true, index: true },
-    user_type: { type: Number, required: true, default: 1 },
     password: { type: String },
     salt: { type: String },
     otp: { type: String },
     otp_expiry: { type: Date },
-    activated: { type: Boolean, default: false },
-    followers: [
-      {
-        type: mongoose.SchemaTypes.ObjectId,
-        ref: 'user',
-      },
-    ],
-    followings: [
-      {
-        type: mongoose.SchemaTypes.ObjectId,
-        ref: 'user',
-      },
-    ],
+    // phone_verified: { type: Boolean, default: false },
   },
   {
     toJSON: {
@@ -53,5 +35,5 @@ const UserSchema = new Schema<UserDoc>(
   },
 );
 
-const User = mongoose.model<UserDoc>('user', UserSchema);
-export { User };
+const PendingUser = mongoose.model<PendingUserDoc>('pusers', UserSchema);
+export { PendingUser };

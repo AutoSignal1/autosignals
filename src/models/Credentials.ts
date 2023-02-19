@@ -24,5 +24,5 @@ const CredentialSchema = new Schema<CredentialDoc>(
   },
 );
 
-const Credential = mongoose.model<CredentialDoc>('credential', CredentialSchema);
+const Credential = mongoose.model<CredentialDoc>('credentials', CredentialSchema);
 export { Credential };
