@@ -17,7 +17,6 @@ export const VerifyOtpReg = async (req: Request, res: Response, next: NextFuncti
     return res.status(400).json(inputErrors[0].constraints);
   } else {
     const { phone, otp } = otpRegInput;
-
     try {
       const existingPendingUser = await PendingUser.findOne({ phone: phone });
       const copyTrader = await CopyTrader.findOne({ phone: phone });
