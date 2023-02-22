@@ -20,7 +20,7 @@ export const SelectAccountDetails = async (req: Request, res: Response, next: Ne
   } else {
     try {
       const { account_type, phone } = reqInputs;
-      const existingPendingUser = await PendingUser.findById(phone);
+      const existingPendingUser = await PendingUser.findOne({ phone: phone });
 
       if (existingPendingUser !== null) {
         if (account_type === AccountType.Trader) {
