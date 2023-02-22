@@ -43,7 +43,7 @@ export const LoginUser = async (req: Request, res: Response, next: NextFunction)
           const result = await existingPendingUser.save();
           if (result) {
             return res.status(201).json({
-              id: result._id,
+              phone: result.phone,
               status: 1,
               message: 'Otp Sent to Phone Number ' + result.phone,
             });
@@ -71,7 +71,7 @@ export const LoginUser = async (req: Request, res: Response, next: NextFunction)
             const result = await existingTrader.save();
             if (result) {
               return res.status(201).json({
-                id: result._id,
+                phone: result.phone,
                 status: 1,
                 message: 'Otp Sent to Phone Number ' + result.phone,
               });
@@ -98,7 +98,7 @@ export const LoginUser = async (req: Request, res: Response, next: NextFunction)
             const result = await existingCopyTrader.save();
             if (result) {
               return res.status(201).json({
-                id: result._id,
+                phone: result.phone,
                 status: 1,
                 message: 'Otp Sent to Phone Number ' + result.phone,
               });
