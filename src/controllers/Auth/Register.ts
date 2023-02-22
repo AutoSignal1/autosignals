@@ -21,7 +21,7 @@ export const RegisterUser = async (req: Request, res: Response, next: NextFuncti
   if (inputErrors.length > 0) {
     return res.status(400).json(inputErrors[0].constraints);
   } else {
-    const { email, password, phone } = customerInputs;
+    const { email, password, phone, full_name } = customerInputs;
     const salt = await GenerateSalt();
     const hashedpassword = await GeneratePassword(password, salt);
     const existingPendingUser = await PendingUser.findOne({
@@ -44,6 +44,7 @@ export const RegisterUser = async (req: Request, res: Response, next: NextFuncti
           password: hashedpassword,
           salt: salt,
           phone: phone,
+          full_name: full_name,
           otp: '1234',
           otp_expiry: expiry,
         });

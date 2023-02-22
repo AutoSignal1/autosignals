@@ -2,6 +2,9 @@ import { IsEmail, IsNotEmpty, Length, IsPhoneNumber, IsNumber } from 'class-vali
 
 export class RegisterTraderInputs {
   @IsNotEmpty()
+  full_name: string;
+
+  @IsNotEmpty()
   @IsEmail()
   email: string;
 
