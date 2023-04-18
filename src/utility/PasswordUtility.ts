@@ -28,11 +28,23 @@ export const GenerateSignature = async (payload: SignaturePayload) => {
 
 export const ValidateSignature = async (req: Request) => {
   const signature = req.get('Authorization');
-  if (signature) {
-    const payload = jwt.verify(signature.split(' ')[1], APP_SECRET) as SignaturePayload;
-    req.user = payload;
 
-    return true;
+  try {
+    if (signature) {
+      const payload = (await jwt.verify(signature.split(' ')[1], APP_SECRET)) as SignaturePayload;
+
+      req.user = payload;
+
+      // return true;
+      return {
+        status: true,
+      };
+    }
+  } catch (error) {
+    return {
+      status: false,
+      error: error,
+    };
   }
-  return false;
+  // return false;
 };

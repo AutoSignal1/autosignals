@@ -4,13 +4,15 @@ export interface CredentialDoc extends Document {
   api_key: string;
   secret: string;
   platform: string;
+  trade_type: string;
 }
 
 const CredentialSchema = new Schema<CredentialDoc>(
   {
-    api_key: { type: String, required: true, maxLength: 50, unique: true },
-    secret: { type: String, required: true, maxLength: 50, unique: true },
+    api_key: { type: String, required: true, unique: true },
+    secret: { type: String, required: true, unique: true },
     platform: { type: String, required: true },
+    trade_type: { type: String, required: true },
   },
   {
     toJSON: {

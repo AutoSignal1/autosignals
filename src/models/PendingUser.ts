@@ -16,6 +16,7 @@ const UserSchema = new Schema<PendingUserDoc>(
     email: { type: String, required: true, maxLength: 50, unique: true, index: true },
     phone: { type: String, required: true, maxLength: 15, unique: true, index: true },
     password: { type: String },
+    full_name: { type: String, required: true },
     salt: { type: String },
     otp: { type: String },
     otp_expiry: { type: Date },

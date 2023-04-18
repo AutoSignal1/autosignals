@@ -14,13 +14,13 @@ export const SelectAccountDetails = async (req: Request, res: Response, next: Ne
   const inputErrors = await validate(reqInputs, {
     validationError: { target: true },
   });
-  const date = new Date();
   if (inputErrors.length > 0) {
     return res.status(400).json(inputErrors[0].constraints);
   } else {
     try {
       const { account_type, phone } = reqInputs;
       const existingPendingUser = await PendingUser.findOne({ phone: phone });
+      console.log(existingPendingUser, '---existingPendingUser ---');
 
       if (existingPendingUser !== null) {
         if (account_type === AccountType.Trader) {
@@ -64,11 +64,13 @@ export const SelectAccountDetails = async (req: Request, res: Response, next: Ne
             otp_expiry: existingPendingUser.otp_expiry,
           });
 
+          console.log(result, '-------  copy trdaer----');
+
           if (result) {
             await PendingUser.deleteOne({ phone });
             const signature = await GenerateSignature({
               _id: result._id,
-              email: result.phone,
+              email: result.email,
               account_type: account_type,
             });
 

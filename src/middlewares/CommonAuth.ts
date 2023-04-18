@@ -13,9 +13,9 @@ declare global {
 export const Authenticate = async (req: Request, res: Response, next: NextFunction) => {
   const validate = await ValidateSignature(req);
 
-  if (validate) {
+  if (validate.status) {
     next();
   } else {
-    return res.json({ message: 'User Not Authorized' });
+    return res.status(401).json({ message: 'Not Authorized or Invalid Token' });
   }
 };
